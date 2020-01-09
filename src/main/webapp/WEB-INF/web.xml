@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app>
+	<display-name>sgp</display-name>
+	<servlet>
+		<servlet-name>ListerCollaborateursController</servlet-name>
+		<servlet-class>dev.sgp.web.ListerCollaborateursController
+		</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>ListerCollaborateursController</servlet-name>
+		<url-pattern>/collaborateurs/lister</url-pattern>
+	</servlet-mapping>
+	<servlet>
+		<servlet-name>EditerCollaborateurController</servlet-name>
+		<servlet-class>dev.sgp.web.EditerCollaborateurController
+		</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>EditerCollaborateurController</servlet-name>
+		<url-pattern>/collaborateurs/editer</url-pattern>
+	</servlet-mapping>
+	<servlet>
+		<servlet-name>CreerCollaborateurController</servlet-name>
+		<servlet-class>dev.sgp.web.CreerCollaborateurController
+		</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>CreerCollaborateurController</servlet-name>
+		<url-pattern>/collaborateurs/creer</url-pattern>
+	</servlet-mapping>
+
+</web-app>
