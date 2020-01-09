@@ -2,6 +2,7 @@ package dev.sgp.web;
 
 import java.io.IOException;
 import java.time.LocalDate;
+import java.time.Period;
 import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -89,26 +90,43 @@ public class CreerCollaborateurController extends HttpServlet {
 				
 				
 			}else{
-
-				resp.setStatus(201);
 				
 				//convert String to LocalDate
 				LocalDate datenaissance = LocalDate.parse(date);
+				Period period = Period.between(datenaissance, LocalDate.now());
 				
-				ResourceBundle monFichierConf = ResourceBundle.getBundle("application");
+				//resp.getWriter().write("Hello ListerCollaborateursController à vous de jouer"+period.getYears());
 				
-				String emailPro = nom+"."+prenom+monFichierConf.getString("application.email");
-				String photo = monFichierConf.getString("application.photoh");
-				ZonedDateTime dateHeureCreation = ZonedDateTime.now();
+				if( Period.between(datenaissance, LocalDate.now()).getYears() < 18 ){
+					resp.setStatus(400);
+					//resp.getWriter().write("tes "+numerosecu+" "+numerosecu.length()+"  "+Pattern.matches("([0-9]){15}",numerosecu));
+					datenaissance = LocalDate.parse(date);
+					
+					Collaborateur collab = new Collaborateur("",nom,prenom,datenaissance,adresse,numerosecu,"","",ZonedDateTime.now(),false);
+					req.setAttribute("collaborateur",collab);
+					req.setAttribute("erreurDate",datenaissance);
+					
+					req.getRequestDispatcher("/WEB-INF/views/collab/creer.jsp")
+					.forward(req, resp);
+				}else{
+					
+					resp.setStatus(201);
+					
+					
+					ResourceBundle monFichierConf = ResourceBundle.getBundle("application");
+					
+					String emailPro = nom+"."+prenom+monFichierConf.getString("application.email");
+					String photo = monFichierConf.getString("application.photoh");
+					ZonedDateTime dateHeureCreation = ZonedDateTime.now();
+					
+					List<Collaborateur> collaborateurs = collabService.listerCollaborateurs();
+					String matricule = "M"+(collaborateurs.size()+1);
 				
-				List<Collaborateur> collaborateurs = collabService.listerCollaborateurs();
-				String matricule = "M"+(collaborateurs.size()+1);
-			
-				Collaborateur nouveauCollab = new Collaborateur(matricule,nom,prenom,datenaissance,adresse,numerosecu,emailPro,photo,dateHeureCreation,true);
-				collabService.sauvegarderCollaborateur(nouveauCollab);
-	
-				resp.sendRedirect(req.getContextPath()+"/collaborateurs/lister");
-	
+					Collaborateur nouveauCollab = new Collaborateur(matricule,nom,prenom,datenaissance,adresse,numerosecu,emailPro,photo,dateHeureCreation,true);
+					collabService.sauvegarderCollaborateur(nouveauCollab);
+		
+					resp.sendRedirect(req.getContextPath()+"/collaborateurs/lister");
+				}
 			}
 		}
 

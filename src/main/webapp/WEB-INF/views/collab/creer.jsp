@@ -17,6 +17,12 @@
 		oObjet.querySelector(".numerosecuValue").innerHTML = $("#numerosecu").val();
 
 	}
+	
+	function validForm(){
+		var form = window.parent.document.getElementById("newCollaborateur");
+		form.submit();
+	};
+	
 </script>
 
 
@@ -85,7 +91,7 @@
 					<%
 						if(request.getAttribute("erreurDate") != null){
 					%>
-						<p class="text-danger">La date de naissance est obligatoire</p>
+						<p class="text-danger">La date de naissance est obligatoire et vous devez avoir au moins 18 ans</p>
 					<% 
 						}
 					%>
@@ -123,8 +129,9 @@
 			</div>
 			<div class="form-row pt-2">
 				<div class="col-1 offset-10 offset-sm-11 text-right">
-					<button type="submit" class="btn btn-success"  id="creer">Creer</button>	
-				</div>
+                    <button type="button" class="btn btn-success" data-toggle="modal" data-target="#confirmModal" onCLick="ConfirmForm()"  id="creer">Creer</button>
+                	<!-- <button type="submit" class="btn btn-success"  id="creer">Creer</button> -->
+                </div>
 			</div>
 		</form>
 
@@ -181,7 +188,7 @@
 				<div class="modal-footer">
 					<button type="button" class="btn btn-secondary"
 						data-dismiss="modal">Annuler</button>
-					<button type="submit" class="btn btn-primary">Confirmer</button>
+					<button type="button" id="submit" class="btn btn-primary" onclick="validForm()">Confirmer</button>
 				</div>
 			</div>
 		</div>

@@ -2,6 +2,8 @@ package dev.sgp.web;
 
 import java.util.List;
 import java.io.IOException;
+import java.time.LocalDate;
+import java.time.ZonedDateTime;
 import java.util.Arrays;
 
 import javax.servlet.ServletException;
@@ -27,7 +29,12 @@ public class ListerCollaborateursController extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		
-
+		/*code test
+		List<Collaborateur> collaborateurstest = collabService.listerCollaborateurs();
+		String matricule = "M"+(collaborateurstest.size()+1);
+		Collaborateur nouveauCollab = new Collaborateur(matricule,"test","toto",LocalDate.now(),"25 rue des loups 34500 beziers","123456789123654","test.toto@societe.com","/images/portraitf.jpg",ZonedDateTime.now(),true);
+		collabService.sauvegarderCollaborateur(nouveauCollab);*/
+		
 		// utilisation du service
 		List<Collaborateur> collaborateurs = collabService.listerCollaborateurs();
 		List<Departement> departements = deptService.listerDepartements();

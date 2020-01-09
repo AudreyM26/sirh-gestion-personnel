@@ -1,8 +1,9 @@
-<%@ page language="java" pageEncoding="UTF-8"%>
+<%@page import="java.util.List"%>
+<%@ page language="java" pageEncoding="UTF-8" contentType="text/html;charset=UTF-8" import="dev.sgp.entite.*"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html">
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
 <link rel="stylesheet"
 	href="<%=request.getContextPath()%>/bootstrap-4.4.1-dist/css/bootstrap.css">
 
@@ -11,21 +12,25 @@
 </head>
 <body>
 	<%@include file="nav.jsp" %>
+	<%
+		Collaborateur collaborateurInfos = (Collaborateur) request.getAttribute("collaborateurInfos");
+		List<Departement> listeDepartements = (List<Departement>) request.getAttribute("listeDepartements");
+	%>
 	<main>
 	<div class="justify-content-center align-items-center container mt-3">
 		<div class="media">
-			<img class="align-self-md-center mr-3" src="/sgp/images/portrait.png"
+			<img class="align-self-md-center mr-3" src="<%= request.getContextPath()+collaborateurInfos.getPhoto() %>"
 				alt="image" width="20%" />
 			<div class="media-body">
-				<form id="collaborateur">
+				<form id="collaborateur" action="editer" method="post">
 					<div class="form-row">
 						<div class="col-md-8 text-left">
-							<h3 class="mt-0">NOM Prénom - Matricule</h3>
+							<h3 class="mt-0"><%= collaborateurInfos.getNom().toUpperCase() %> <%= collaborateurInfos.getPrenom() %> - <%= collaborateurInfos.getMatricule() %></h3>
+							<input type="hidden" id="matricule" name="matricule" value="<%= collaborateurInfos.getMatricule() %>">
 						</div>
 						<div class="col-md-4 align-bottom pl-5">
-							<input type="checkbox" class="form-check-input" id="desactiver"
-								value="Désactiver"><label class="form-check-label"
-								for="desactiver">Désactiver</label>
+							<input type="checkbox" class="form-check-input" id="actif" name="actif" value="false">
+							<label class="form-check-label" for="desactiver">Désactiver</label>
 						</div>
 					</div>
 					<div class="accordion" id="accordionIdentite">
@@ -48,18 +53,11 @@
 											<label for="civilite" class="col-form-label">Civilité</label>
 										</div>
 										<div class="col-md-8">
-											<select name="civilite" id="civilite" class="form-control" required>
+											<select name="civilite" id="civilite" class="form-control" >
 												<option value="">-</option>
-												<option value="mme" <% if (collab.getCivilite().getAbreviation().equals("Madame")) { %> selected="selected" <% } %>>Madame</option>
-												<option value="mr" <% if (collab.getCivilite().getAbreviation().equals("Monsieur")) { %> selected="selected" <% } %>>Monsieur</option>
+												<option value="mme" <% if (collaborateurInfos.getCivilite() != null && collaborateurInfos.getCivilite().getAbreviation().equals("Madame")) { %> selected="selected" <% } %>>Madame</option>
+												<option value="mr" <% if (collaborateurInfos.getCivilite() != null && collaborateurInfos.getCivilite().getAbreviation().equals("Monsieur")) { %> selected="selected" <% } %>>Monsieur</option>
 											</select>
-											<%
-												if(request.getAttribute("erreurCivilite") != null){
-											%>
-												<p class="text-danger">La civilité est obligatoire</p>
-											<% 
-												}
-											%>
 										</div>
 									</div>
 									<div class="row pt-2">
@@ -67,8 +65,7 @@
 											<label for="nom" class="col-form-label">Nom</label>
 										</div>
 										<div class="col-md-8">
-											<input type="text" class="form-control" id="nom" value=""
-												required>
+											<input type="text" class="form-control" id="nom" id="nom" value="<%= collaborateurInfos.getNom() %>" disabled="disabled">
 										</div>
 									</div>
 									<div class="row pt-2">
@@ -76,8 +73,7 @@
 											<label for="prenom" class="col-form-label">Prénom</label>
 										</div>
 										<div class="col-md-8">
-											<input type="text" class="form-control" id="prenom" value=""
-												required>
+											<input type="text" class="form-control" id="prenom" id="prenom" value="<%= collaborateurInfos.getPrenom() %>" disabled="disabled">
 										</div>
 									</div>
 									<div class="row pt-2">
@@ -85,8 +81,7 @@
 											<label for="date" class="col-form-label">Date de naissance</label>
 										</div>
 										<div class="col-md-8">
-											<input type="date" class="form-control" id="date" value=""
-												required>
+											<input type="date" class="form-control" id="date" id="date" value="<%= collaborateurInfos.getDateDeNaissance() %>" disabled="disabled">
 										</div>
 									</div>
 									<div class="row pt-2">
@@ -94,7 +89,14 @@
 											<label for="adresse" class="col-form-label">Adresse</label>
 										</div>
 										<div class="col-md-8">
-											<textarea class="form-control" id="adresse" rows="3" required></textarea>
+											<textarea class="form-control" id="adresse" name="adresse" rows="3" ><%= collaborateurInfos.getAdresse() %></textarea>
+											<%
+												if(request.getAttribute("erreurAdresse") != null){
+											%>
+												<p class="text-danger">L' adresse est obligatoire</p>
+											<% 
+												}
+											%>
 										</div>
 									</div>
 									<div class="row pt-2">
@@ -102,7 +104,7 @@
 											<label for="numerosecu" class="col-form-label">Numéro de sécurité sociale</label>
 										</div>
 										<div class="col-md-8">
-											<input type="text" class="form-control" id="numerosecu" value="" required>
+											<input type="text" class="form-control" id="numerosecu" name="numerosecu" value="<%= collaborateurInfos.getNumeroSecuriteSociale() %>" disabled="disabled">
 										</div>
 									</div>
 									<div class="row pt-2">
@@ -110,7 +112,7 @@
 											<label for="tel" class="col-form-label">Téléphone</label>
 										</div>
 										<div class="col-md-8">
-											<input type="tel" class="form-control" id="tel" name="tel" value="<%= collab.getTelephone() %>" >
+											<input type="tel" class="form-control" id="tel" name="tel" value="<%= collaborateurInfos.getTelephone() %>" >
 											<%
 												if(request.getAttribute("erreurTelephone") != null){
 											%>
@@ -141,12 +143,20 @@
 											<label for="dept" class="col-form-label">Département</label>
 										</div>
 										<div class="col-md-8">
+											<% String deptCollab = ""; %>
 											<select name="dept" id="dept" class="form-control">
-												<option value="tous">Tous</option>
-												<option value="compta">Comptabilité</option>
-												<option value="rh">Ressources humaines</option>
-												<option value="it">Informatique</option>
-											</select>
+						                        <option value="">Tous</option>
+						                        <% for (Departement dept : listeDepartements) { 
+						                        	String valueDept = dept.getId()+","+dept.getNom();
+						                        	
+						                        	if (collaborateurInfos.getDepartement() != null){
+						                        		deptCollab = collaborateurInfos.getDepartement().getId()+","+collaborateurInfos.getDepartement().getNom();
+						                        	}   			
+						                        %>
+						                        
+						                        <option value="<%= dept.getId()%>,<%= dept.getNom()%>" <% if(deptCollab.equals(valueDept)) { %> selected="selected" <% } %>><%= dept.getNom()%></option>
+						                        <% } %>
+						                    </select>
 										</div>
 									</div>
 									<div class="row pt-2">
@@ -154,8 +164,7 @@
 											<label for="dept_nom" class="col-form-label">Nom</label>
 										</div>
 										<div class="col-md-8">
-											<input type="text" class="form-control" id="dept_nom"
-												value="" required>
+											<input type="text" class="form-control" id="poste" name="poste" value="<%= collaborateurInfos.getIntitulePoste() %>" >
 										</div>
 									</div>
 								</div>
@@ -180,8 +189,7 @@
 											<label for="iban" class="col-form-label">IBAN</label>
 										</div>
 										<div class="col-md-8">
-											<input type="text" class="form-control" id="iban" value=""
-												required>
+											<input type="text" class="form-control" id="iban" name="iban" value="<%= collaborateurInfos.getIban() %>">
 										</div>
 									</div>
 									<div class="row pt-2">
@@ -189,8 +197,7 @@
 											<label for="bic" class="col-form-label">BIC</label>
 										</div>
 										<div class="col-md-8">
-											<input type="text" class="form-control" id="bic" value=""
-												required>
+											<input type="text" class="form-control" id="bic" name="bic" value="<%= collaborateurInfos.getBic() %>">
 										</div>
 									</div>
 								</div>
@@ -199,7 +206,7 @@
 					</div>
 					<div class="form-row pt-2">
 						<div class="col-1 offset-8 offset-sm-9 offset-sm-10">
-							<button type="button" class="btn btn-success" id="modify">Sauvegarder</button>
+							<button type="submit" class="btn btn-success" id="modify">Sauvegarder</button>
 						</div>
 					</div>
 				</form>
