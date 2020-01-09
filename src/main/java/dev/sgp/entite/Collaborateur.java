@@ -18,6 +18,9 @@ public class Collaborateur {
 	private ZonedDateTime dateHeureCreation;
 	private boolean actif;
 	
+	private String intitulePoste;
+	private Departement departement;
+	
 	public Collaborateur(String matricule,String nom, String prenom, LocalDate dateDeNaissance, String adresse,
 			String numeroSecuriteSociale,String emailPro, String photo, ZonedDateTime dateHeureCreation,
 			boolean actif) {
@@ -201,6 +204,34 @@ public class Collaborateur {
 	 */
 	public void setActif(boolean actif) {
 		this.actif = actif;
+	}
+
+	/**
+	 * @return the intitulePoste
+	 */
+	public String getIntitulePoste() {
+		return intitulePoste;
+	}
+
+	/**
+	 * @param intitulePoste the intitulePoste to set
+	 */
+	public void setIntitulePoste(String intitulePoste) {
+		this.intitulePoste = intitulePoste;
+	}
+
+	/**
+	 * @return the departement
+	 */
+	public Departement getDepartement() {
+		return departement;
+	}
+
+	/**
+	 * @param departement the departement to set
+	 */
+	public void setDepartement(Departement departement) {
+		this.departement = departement;
 	}
 
 	@Override

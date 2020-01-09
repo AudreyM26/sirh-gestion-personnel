@@ -13,37 +13,38 @@
 	<%@include file="nav.jsp" %>
 	<%
 		List<Collaborateur> listeCollaborateurs = (List<Collaborateur>) request.getAttribute("listeCollaborateurs");
+		List<Departement> listeDepartements = (List<Departement>) request.getAttribute("listeDepartements");
 	%>
 
 	<main>
-        <div class="container mt-3">
+        <div class="container-fluid mt-3">
             <div class="row mb-2">
-                <div class="col-md-4 mt-sm-4">
+                <div class="col-md-4 ml-md-5">
                     <h2>Les Collaborateurs</h2>
                 </div>
-                <div class="col-md-2 offset-md-4 offset-xl-6">
+                <div class="col-md-2 offset-md-3 offset-xl-5">
                     <input type="button" class="btn btn-outline-secondary" onclick="window.location.href='creer'"
                         value="Ajouter un nouveau collaborateur">
                 </div>
             </div>
             <div class="row mb-2">
-                <div class="col-md-5 text-md-right">
+                <div class="col-md-4 text-md-right">
                     <labefor="rech">Rechercher un nom ou un prénom qui commence par :</label>
                 </div>
-                <div class="col-md-2"><input type="text" id="rech" name="rech" class="form-control"></div>
+                <div class="col-md-3"><input type="text" id="rech" name="rech" class="form-control"></div>
                 <div class="col-md-2 pt-1 pt-sm-0"><input type="button" class="form-control btn-outline-secondary" value="Rechercher"></div>
                 <div class="col-md-3 pl-5 pl-md-4"><input type="checkbox" id="checkcollab" name="checkcollab"
                         class="form-check-input"> <label for="checkcollab">Voir les collaborateurs désactivés</label>
                 </div>
             </div>
             <div class="row">
-                <div class="col-md-5 text-md-right"><label for="dept">Filtrer par département :</label></div>
-                <div class="col-md-2">
+                <div class="col-md-4 text-md-right"><label for="dept">Filtrer par département :</label></div>
+                <div class="col-md-3">
                     <select name="dept" id="dept" class="form-control">
-                        <option value="tous">Tous</option>
-                        <option value="compta">Comptabilité</option>
-                        <option value="rh">Ressources humaines</option>
-                        <option value="it">Informatique</option>
+                        <option value="">Tous</option>
+                        <% for (Departement dept : listeDepartements) { %>
+                        <option value="<%= dept.getId()%>"><%= dept.getNom()%></option>
+                        <% } %>
                     </select>
                 </div>
             </div>
@@ -66,11 +67,24 @@
                                         <div class="col-12 col-xl-9 ">
                                             <div class="row">
                                                 <div class="col-5">Fonction</div>
-                                                <div class="col-7">a aaaaa</div>
+                                                <% 
+                                                	String intitule ="";
+                                                	if(collab.getIntitulePoste() != null){
+                                                		intitule = collab.getIntitulePoste();
+                                                	}
+                                                %>
+                                               
+                                                <div class="col-7"><%= intitule %></div>
                                             </div>
                                             <div class="row">
                                                 <div class="col-5">Département</div>
-                                                <div class="col-7">34</div>
+                                                <% 
+                                                	String dept ="";
+                                                	if(collab.getDepartement() != null){
+                                                		dept = collab.getDepartement().getNom();
+                                                	}
+                                                %>
+                                                <div class="col-7"><%= dept %></div>
                                             </div>
                                             <div class="row">
                                                 <div class="col-5">Email</div>

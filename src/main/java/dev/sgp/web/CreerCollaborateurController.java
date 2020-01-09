@@ -10,7 +10,6 @@ import java.util.regex.Pattern;
 import javax.servlet.ServletException;
 import javax.servlet.http.*;
 
-import dev.sgp.entite.Civilite;
 import dev.sgp.entite.Collaborateur;
 import dev.sgp.service.CollaborateurService;
 import dev.sgp.util.Constantes;
