@@ -29,7 +29,7 @@
 							<input type="hidden" id="matricule" name="matricule" value="<%= collaborateurInfos.getMatricule() %>">
 						</div>
 						<div class="col-md-4 align-bottom pl-5">
-							<input type="checkbox" class="form-check-input" id="actif" name="actif" value="false">
+							<input type="checkbox" class="form-check-input" id="actif" name="actif" value="false" <% if(collaborateurInfos.isActif()==false ){ %>checked="checked" <%} %>>
 							<label class="form-check-label" for="desactiver">Désactiver</label>
 						</div>
 					</div>
@@ -198,6 +198,7 @@
 										</div>
 										<div class="col-md-8">
 											<input type="text" class="form-control" id="bic" name="bic" value="<%= collaborateurInfos.getBic() %>">
+											Banque : <%= collaborateurInfos.getBanque() %>
 										</div>
 									</div>
 								</div>

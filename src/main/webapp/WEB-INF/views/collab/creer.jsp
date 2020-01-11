@@ -6,25 +6,7 @@
 <link rel="stylesheet"
 	href="<%=request.getContextPath()%>/bootstrap-4.4.1-dist/css/bootstrap.css">
 
-<script type="text/JavaScript">
-	function ConfirmForm() {
-		var oObjet = document.getElementById("confirmModal");
-
-		oObjet.querySelector(".nameValue").innerHTML = $("#nom").val();
-		oObjet.querySelector(".firstnameValue").innerHTML = $("#prenom").val();
-		oObjet.querySelector(".dateValue").innerHTML = $("#datenaissance").val();
-		oObjet.querySelector(".adresseValue").innerHTML = $("#adresse").val();
-		oObjet.querySelector(".numerosecuValue").innerHTML = $("#numerosecu").val();
-
-	}
-	
-	function validForm(){
-		var form = window.parent.document.getElementById("newCollaborateur");
-		form.submit();
-	};
-	
-</script>
-
+<script type="text/javascript" src="<%=request.getContextPath()%>/js/fonction.js"></script>
 
 <title>SGP - Nouveau collaborateur</title>
 </head>

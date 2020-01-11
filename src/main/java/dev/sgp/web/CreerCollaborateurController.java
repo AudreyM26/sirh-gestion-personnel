@@ -8,6 +8,8 @@ import java.util.List;
 import java.util.ResourceBundle;
 import java.util.regex.Pattern;
 
+import org.apache.commons.lang3.StringUtils;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.*;
 
@@ -43,6 +45,9 @@ public class CreerCollaborateurController extends HttpServlet {
 		String adresse = req.getParameter("adresse").trim();
 		String numerosecu = req.getParameter("numerosecu").trim();
 		
+		nom = new String(nom.toString().getBytes("iso-8859-1"), "utf-8");
+		prenom = new String(prenom.toString().getBytes("iso-8859-1"), "utf-8");
+		adresse = new String(adresse.toString().getBytes("iso-8859-1"), "utf-8");
 
 		if ( nom.equals("") || prenom.equals("") || date.equals("") || adresse.equals("") || numerosecu.equals("")) {
 			resp.setStatus(400);
@@ -111,11 +116,9 @@ public class CreerCollaborateurController extends HttpServlet {
 				}else{
 					
 					resp.setStatus(201);
-					
-					
 					ResourceBundle monFichierConf = ResourceBundle.getBundle("application");
 					
-					String emailPro = nom+"."+prenom+monFichierConf.getString("application.email");
+					String emailPro = StringUtils.stripAccents(nom)+"."+StringUtils.stripAccents(prenom)+monFichierConf.getString("application.email");
 					String photo = monFichierConf.getString("application.photoh");
 					ZonedDateTime dateHeureCreation = ZonedDateTime.now();
 					

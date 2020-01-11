@@ -28,21 +28,76 @@ public class ListerCollaborateursController extends HttpServlet {
 	
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		
-		/*code test
-		List<Collaborateur> collaborateurstest = collabService.listerCollaborateurs();
-		String matricule = "M"+(collaborateurstest.size()+1);
-		Collaborateur nouveauCollab = new Collaborateur(matricule,"test","toto",LocalDate.now(),"25 rue des loups 34500 beziers","123456789123654","test.toto@societe.com","/images/portraitf.jpg",ZonedDateTime.now(),true);
-		collabService.sauvegarderCollaborateur(nouveauCollab);*/
-		
+				
+		//parametre de reccherche
+		String actif = req.getParameter("actif");
+		String dept = req.getParameter("dept");
+		String mot = req.getParameter("mot");
+				
 		// utilisation du service
 		List<Collaborateur> collaborateurs = collabService.listerCollaborateurs();
 		List<Departement> departements = deptService.listerDepartements();
-		
-		//req.setAttribute("listeNoms", Arrays.asList("Robert", "Jean", "Hugues"));
+
 		req.setAttribute("listeCollaborateurs", collaborateurs);
 		req.setAttribute("listeDepartements", departements);
+		
+	
+		if(actif != null){
+			req.setAttribute("actif", actif);
+		}
+		
+		if(dept != null){
+			req.setAttribute("dept", dept);
+		}
+		
+		if(mot != null){
+			req.setAttribute("mot", mot);
+		}
+		
 		req.getRequestDispatcher("/WEB-INF/views/collab/listerCollaborateurs.jsp")
 		.forward(req, resp);
+	}
+	
+	@Override
+	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		
+		//parametre de reccherche
+		String actif = req.getParameter("checkcollab");
+		String dept = req.getParameter("dept");
+		String mot = req.getParameter("mot").trim();
+		
+		String params = "";
+		String separateur = "";
+		
+		if(actif != null){
+			separateur = "&";
+			if (params.equals("")) {
+				separateur = "?";
+			}
+			
+			params = params+separateur+"actif=no";
+		}
+		
+		if(!dept.equals("")){
+			separateur = "&";
+			if (params.equals("")) {
+				separateur = "?";
+			}
+			
+			params = params+separateur+"dept="+dept;
+		}
+		
+		if(!mot.equals("")){
+			separateur = "&";
+			if (params.equals("")) {
+				separateur = "?";
+			}
+			
+			params = params+separateur+"mot="+mot;
+		}
+		//resp.getWriter().write("actif "+actif);
+		
+		resp.sendRedirect(req.getContextPath()+"/collaborateurs/lister"+params);
+
 	}
 }

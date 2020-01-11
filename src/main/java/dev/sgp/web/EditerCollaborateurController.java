@@ -11,6 +11,7 @@ import javax.servlet.http.*;
 import dev.sgp.entite.Civilite;
 import dev.sgp.entite.Collaborateur;
 import dev.sgp.entite.Departement;
+import dev.sgp.service.BanqueService;
 import dev.sgp.service.CollaborateurService;
 import dev.sgp.service.DepartementService;
 import dev.sgp.util.Constantes;
@@ -101,7 +102,9 @@ public class EditerCollaborateurController extends HttpServlet {
 			}
 			
 			if(!poste.equals("")){
-				collaborateur.setIntitulePoste(poste);
+				String posteEncode = new String(poste.toString().getBytes("iso-8859-1"), "utf-8");
+				collaborateur.setIntitulePoste(posteEncode);
+				//resp.getWriter().write("poste : "+poste+" "+posteEncode);
 			}
 			
 			if(!iban.equals("")){
@@ -110,7 +113,9 @@ public class EditerCollaborateurController extends HttpServlet {
 			
 			if(!bic.equals("")){
 				collaborateur.setBic(bic);
-				collaborateur.setBanque(bic);
+				
+				BanqueService banqueService = new BanqueService();
+				collaborateur.setBanque(BanqueService.banqueNom(bic));
 			}
 			
 			if(!civilite.equals("")){				
@@ -140,7 +145,6 @@ public class EditerCollaborateurController extends HttpServlet {
 				resp.setStatus(400);
 	
 				errorTel = "erreurTelephone";
-				listErreur = "erreurTelephone";
 				
 			}else{
 				collaborateur.setTelephone(telephone);
@@ -150,9 +154,9 @@ public class EditerCollaborateurController extends HttpServlet {
 				resp.setStatus(400);
 			
 				errorAdresse = "erreurAdresse";
-				listErreur = listErreur+",erreurAdresse";
+	
 			}else{
-				collaborateur.setAdresse(adresse);
+				collaborateur.setAdresse(new String(adresse.toString().getBytes("iso-8859-1"), "utf-8"));
 			}
 			
 			String erreur = "";
