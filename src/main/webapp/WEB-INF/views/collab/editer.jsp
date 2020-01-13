@@ -1,35 +1,33 @@
 <%@page import="java.util.List"%>
 <%@ page language="java" pageEncoding="UTF-8" contentType="text/html;charset=UTF-8" import="dev.sgp.entite.*"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
-<link rel="stylesheet"
-	href="<%=request.getContextPath()%>/bootstrap-4.4.1-dist/css/bootstrap.css">
-
-
+<link rel="stylesheet" href="<c:url value='/bootstrap-4.4.1-dist/css/bootstrap.css'/>">
 <title>SGP - Nouveau collaborateur</title>
 </head>
 <body>
 	<%@include file="nav.jsp" %>
-	<%
-		Collaborateur collaborateurInfos = (Collaborateur) request.getAttribute("collaborateurInfos");
-		List<Departement> listeDepartements = (List<Departement>) request.getAttribute("listeDepartements");
-	%>
+	
+	<c:set var ="collaborateurInfos" scope ="session" value ="${param.collaborateurInfos}"/>
+	<c:set var ="listeDepartements" scope ="session" value ="${param.listeDepartements}"/>
+	
 	<main>
 	<div class="justify-content-center align-items-center container mt-3">
 		<div class="media">
-			<img class="align-self-md-center mr-3" src="<%= request.getContextPath()+collaborateurInfos.getPhoto() %>"
+			<img class="align-self-md-center mr-3" src="<c:url value='${collaborateurInfos.getPhoto()}' />"
 				alt="image" width="20%" />
 			<div class="media-body">
 				<form id="collaborateur" action="editer" method="post">
 					<div class="form-row">
 						<div class="col-md-8 text-left">
-							<h3 class="mt-0"><%= collaborateurInfos.getNom().toUpperCase() %> <%= collaborateurInfos.getPrenom() %> - <%= collaborateurInfos.getMatricule() %></h3>
-							<input type="hidden" id="matricule" name="matricule" value="<%= collaborateurInfos.getMatricule() %>">
+							<h3 class="mt-0"><c:out value='${collaborateurInfos.getNom().toUpperCase()}'/> <c:out value='${collaborateurInfos.getPrenom()}'/> - <c:out value='${collaborateurInfos.getMatricule()}'/></h3>
+							<input type="hidden" id="matricule" name="matricule" value="<c:out value='${collaborateurInfos.getMatricule()}'/>">
 						</div>
 						<div class="col-md-4 align-bottom pl-5">
-							<input type="checkbox" class="form-check-input" id="actif" name="actif" value="false" <% if(collaborateurInfos.isActif()==false ){ %>checked="checked" <%} %>>
+							<input type="checkbox" class="form-check-input" id="actif" name="actif" value="false" <c:if test="${collaborateurInfos.isActif() == false}">checked="checked"</c:if> />
 							<label class="form-check-label" for="desactiver">Désactiver</label>
 						</div>
 					</div>
@@ -55,8 +53,8 @@
 										<div class="col-md-8">
 											<select name="civilite" id="civilite" class="form-control" >
 												<option value="">-</option>
-												<option value="mme" <% if (collaborateurInfos.getCivilite() != null && collaborateurInfos.getCivilite().getAbreviation().equals("Madame")) { %> selected="selected" <% } %>>Madame</option>
-												<option value="mr" <% if (collaborateurInfos.getCivilite() != null && collaborateurInfos.getCivilite().getAbreviation().equals("Monsieur")) { %> selected="selected" <% } %>>Monsieur</option>
+												<option value="mme" <c:if test="${collaborateurInfos.getCivilite()!= null && collaborateurInfos.getCivilite().getAbreviation() == 'Madame'}"><c:out value='selected="selected"' /></c:if>>Madame</option>
+												<option value="mr" <c:if test="${collaborateurInfos.getCivilite()!= null && collaborateurInfos.getCivilite().getAbreviation() == 'Monsieur'}"><c:out value='selected="selected"' /></c:if>>Monsieur</option>
 											</select>
 										</div>
 									</div>
@@ -65,7 +63,7 @@
 											<label for="nom" class="col-form-label">Nom</label>
 										</div>
 										<div class="col-md-8">
-											<input type="text" class="form-control" id="nom" id="nom" value="<%= collaborateurInfos.getNom() %>" disabled="disabled">
+											<input type="text" class="form-control" id="nom" id="nom" value="<c:out value='${collaborateurInfos.getNom()}'/>" disabled="disabled"/>
 										</div>
 									</div>
 									<div class="row pt-2">
@@ -73,7 +71,7 @@
 											<label for="prenom" class="col-form-label">Prénom</label>
 										</div>
 										<div class="col-md-8">
-											<input type="text" class="form-control" id="prenom" id="prenom" value="<%= collaborateurInfos.getPrenom() %>" disabled="disabled">
+											<input type="text" class="form-control" id="prenom" id="prenom" value="<c:out value='${collaborateurInfos.getPrenom()}'/>" disabled="disabled"/>
 										</div>
 									</div>
 									<div class="row pt-2">
@@ -81,7 +79,7 @@
 											<label for="date" class="col-form-label">Date de naissance</label>
 										</div>
 										<div class="col-md-8">
-											<input type="date" class="form-control" id="date" id="date" value="<%= collaborateurInfos.getDateDeNaissance() %>" disabled="disabled">
+											<input type="date" class="form-control" id="date" id="date" value="<c:out value='${collaborateurInfos.getDateDeNaissance()}'/>" disabled="disabled"/>
 										</div>
 									</div>
 									<div class="row pt-2">
@@ -89,14 +87,11 @@
 											<label for="adresse" class="col-form-label">Adresse</label>
 										</div>
 										<div class="col-md-8">
-											<textarea class="form-control" id="adresse" name="adresse" rows="3" ><%= collaborateurInfos.getAdresse() %></textarea>
-											<%
-												if(request.getAttribute("erreurAdresse") != null){
-											%>
+											<textarea class="form-control" id="adresse" name="adresse" rows="3" ><c:out value='${collaborateurInfos.getAdresse()}'/></textarea>
+											
+											<c:if test="${not empty requestScope.erreurAdresse }">
 												<p class="text-danger">L' adresse est obligatoire</p>
-											<% 
-												}
-											%>
+											</c:if>
 										</div>
 									</div>
 									<div class="row pt-2">
@@ -104,7 +99,7 @@
 											<label for="numerosecu" class="col-form-label">Numéro de sécurité sociale</label>
 										</div>
 										<div class="col-md-8">
-											<input type="text" class="form-control" id="numerosecu" name="numerosecu" value="<%= collaborateurInfos.getNumeroSecuriteSociale() %>" disabled="disabled">
+											<input type="text" class="form-control" id="numerosecu" name="numerosecu" value="<c:out value='${collaborateurInfos.getNumeroSecuriteSociale()}'/>" disabled="disabled"/>
 										</div>
 									</div>
 									<div class="row pt-2">
@@ -112,14 +107,11 @@
 											<label for="tel" class="col-form-label">Téléphone</label>
 										</div>
 										<div class="col-md-8">
-											<input type="tel" class="form-control" id="tel" name="tel" value="<%= collaborateurInfos.getTelephone() %>" >
-											<%
-												if(request.getAttribute("erreurTelephone") != null){
-											%>
+											<input type="tel" class="form-control" id="tel" name="tel" value="<c:out value='${collaborateurInfos.getTelephone()}'/>" />
+											
+											<c:if test="${not empty requestScope.erreurTelephone }">
 												<p class="text-danger">Le numéro de téléphone doit contenir 10 chiffres</p>
-											<% 
-												}
-											%>
+											</c:if>
 										</div>
 									</div>
 								</div>
@@ -143,28 +135,28 @@
 											<label for="dept" class="col-form-label">Département</label>
 										</div>
 										<div class="col-md-8">
-											<% String deptCollab = ""; %>
+											<c:set var= "deptCollab" scope="session" value=""/>
+											
 											<select name="dept" id="dept" class="form-control">
 						                        <option value="">Tous</option>
-						                        <% for (Departement dept : listeDepartements) { 
-						                        	String valueDept = dept.getId()+","+dept.getNom();
+						                        <c:forEach items="${listeDepartements}" var="dept">
+						                        	<c:set var= "valueDept" scope="session" value="${dept.getId()},${dept.getNom()}"/>
 						                        	
-						                        	if (collaborateurInfos.getDepartement() != null){
-						                        		deptCollab = collaborateurInfos.getDepartement().getId()+","+collaborateurInfos.getDepartement().getNom();
-						                        	}   			
-						                        %>
-						                        
-						                        <option value="<%= dept.getId()%>,<%= dept.getNom()%>" <% if(deptCollab.equals(valueDept)) { %> selected="selected" <% } %>><%= dept.getNom()%></option>
-						                        <% } %>
+						                        	<c:if test="${collaborateurInfos.getDepartement() != null}">
+                                                		<c:set var="deptCollab" scope="session" value="${collaborateurInfos.getDepartement().getId()},${collaborateurInfos.getDepartement().getNom()}" />
+                                               		</c:if>
+                                                
+						                       		<option value="<c:out value='${valueDept}'/>" <c:if test="${deptCollab == valueDept}"><c:out value='selected="selected"' /></c:if> ><c:out value='${dept.getNom()}'/></option>
+						                       	</c:forEach>
 						                    </select>
 										</div>
 									</div>
 									<div class="row pt-2">
 										<div class="col-md-4">
-											<label for="dept_nom" class="col-form-label">Nom</label>
+											<label for="poste" class="col-form-label">Nom</label>
 										</div>
 										<div class="col-md-8">
-											<input type="text" class="form-control" id="poste" name="poste" value="<%= collaborateurInfos.getIntitulePoste() %>" >
+											<input type="text" class="form-control" id="poste" name="poste" value="<c:out value='${collaborateurInfos.getIntitulePoste()}'/>" />
 										</div>
 									</div>
 								</div>
@@ -189,7 +181,7 @@
 											<label for="iban" class="col-form-label">IBAN</label>
 										</div>
 										<div class="col-md-8">
-											<input type="text" class="form-control" id="iban" name="iban" value="<%= collaborateurInfos.getIban() %>">
+											<input type="text" class="form-control" id="iban" name="iban" value="<c:out value='${collaborateurInfos.getIban()}'/>" />
 										</div>
 									</div>
 									<div class="row pt-2">
@@ -197,8 +189,8 @@
 											<label for="bic" class="col-form-label">BIC</label>
 										</div>
 										<div class="col-md-8">
-											<input type="text" class="form-control" id="bic" name="bic" value="<%= collaborateurInfos.getBic() %>">
-											Banque : <%= collaborateurInfos.getBanque() %>
+											<input type="text" class="form-control" id="bic" name="bic" value="<c:out value='${collaborateurInfos.getBic()}'/>" />
+											Banque : <c:out value='${collaborateurInfos.getBanque()}'/>
 										</div>
 									</div>
 								</div>

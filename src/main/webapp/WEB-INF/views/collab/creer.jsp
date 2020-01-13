@@ -1,13 +1,11 @@
 <%@ page language="java" pageEncoding="UTF-8" import="dev.sgp.entite.*,java.time.LocalDate,java.time.ZonedDateTime,java.time.format.DateTimeFormatter" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
-<link rel="stylesheet"
-	href="<%=request.getContextPath()%>/bootstrap-4.4.1-dist/css/bootstrap.css">
-
-<script type="text/javascript" src="<%=request.getContextPath()%>/js/fonction.js"></script>
-
+<link rel="stylesheet" href="<c:url value='/bootstrap-4.4.1-dist/css/bootstrap.css'/>">
+<script type="text/javascript" src="<c:url value='/js/fonction.js'/>" ></script>
 <title>SGP - Nouveau collaborateur</title>
 </head>
 <body>
@@ -16,13 +14,8 @@
 	<div class="pl-3 pl-sm-5 mt-sm-4 mb-3">
 		<h2>Nouveau collaborateur</h2>
 	</div>
-	<% 
-	Collaborateur collab = new Collaborateur("","","",LocalDate.now(),"","","","",ZonedDateTime.now(),false);
 	
-	if(request.getAttribute("collaborateur") != null){
-		collab = (Collaborateur) request.getAttribute("collaborateur");
-	}
-	%>
+	<c:set var ="collab" scope ="session" value ="${collaborateur}"/>
 	
 	<div class="justify-content-center align-items-center container pl-md-5">
 		<form id="newCollaborateur" action="creer" method="post">
@@ -31,15 +24,10 @@
 					<label for="nom" class="col-form-label">Nom</label>
 				</div>
 				<div class="col-8">
-					<input type="text" class="form-control" id="nom" name="nom" value="<%= collab.getNom() %>" required  >
-					
-					<%
-						if(request.getAttribute("erreurNom") != null){
-					%>
+					<input type="text" class="form-control" id="nom" name="nom" value="<c:out value='${collab.getNom()}'/>" required  >
+					<c:if test="${not empty requestScope.erreurNom}">
 						<p class="text-danger">Le nom est obligatoire</p>
-					<% 
-						}
-					%>
+					</c:if>
 				</div>
 			</div>
 			<div class="form-row pt-2">
@@ -47,14 +35,10 @@
 					<label for="prenom" class="col-form-label">Prénom</label>
 				</div>
 				<div class="col-8">
-					<input type="text" class="form-control" id="prenom" name="prenom" value="<%= collab.getPrenom() %>" required>
-					<%
-						if(request.getAttribute("erreurPrenom") != null){
-					%>
+					<input type="text" class="form-control" id="prenom" name="prenom" value="<c:out value='${collab.getPrenom()}'/>" required>
+					<c:if test="${not empty requestScope.erreurPrenom }">
 						<p class="text-danger">Le prénom est obligatoire</p>
-					<% 
-						}
-					%>
+					</c:if>
 				</div>
 			</div>
 			<div class="form-row pt-2">
@@ -62,21 +46,14 @@
 					<label for="date" class="col-form-label">Date de naissance</label>
 				</div>
 				<div class="col-8">
-				<% 
-					String valueDate = "";
-					if(!collab.getDateDeNaissance().equals(LocalDate.now())){ 
-						valueDate = collab.getDateDeNaissance().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-				%>
-					
-				<%} %>
-					<input type="date" class="form-control" id="datenaissance" name="datenaissance" value="<%= valueDate %>"  required>
-					<%
-						if(request.getAttribute("erreurDate") != null){
-					%>
+					<c:set var="valueDate" scope="session" value=""/>
+					<c:if test="${collab.getDateDeNaissance() != LocalDate.now()}">
+						<c:set var="valueDate" scope="session" value="${collab.getDateDeNaissance().format(DateTimeFormatter.ofPattern('yyyy-MM-dd'))}"/>
+					</c:if>
+					<input type="date" class="form-control" id="datenaissance" name="datenaissance" value="<c:out value='${valueDate}'/>"  required>
+					<c:if test="${not empty requestScope.erreurDate }">
 						<p class="text-danger">La date de naissance est obligatoire et vous devez avoir au moins 18 ans</p>
-					<% 
-						}
-					%>
+					</c:if>
 				</div>
 			</div>
 			<div class="form-row pt-2">
@@ -84,14 +61,10 @@
 					<label for="adresse" class="col-form-label">Adresse</label>
 				</div>
 				<div class="col-8">
-					<textarea class="form-control" id="adresse" name="adresse" rows="3" required ><%= collab.getAdresse() %></textarea>
-					<%
-						if(request.getAttribute("erreurAdresse") != null){
-					%>
+					<textarea class="form-control" id="adresse" name="adresse" rows="3" required ><c:out value='${collab.getAdresse()}'/></textarea>
+					<c:if test="${not empty requestScope.erreurAdresse }">
 						<p class="text-danger">L' adresse est obligatoire</p>
-					<% 
-						}
-					%>
+					</c:if>
 				</div>
 			</div>
 			<div class="form-row pt-2">
@@ -99,14 +72,10 @@
 					<label for="numerosecu" class="col-form-label">Numéro de sécurité sociale</label>
 				</div>
 				<div class="col-8">
-					<input type="text" class="form-control" id="numerosecu" name="numerosecu" value="<%= collab.getNumeroSecuriteSociale() %>" required >
-					<%
-						if(request.getAttribute("erreurNumero") != null){
-					%>
+					<input type="text" class="form-control" id="numerosecu" name="numerosecu" value="<c:out value='${collab.getNumeroSecuriteSociale()}'/>" required >
+					<c:if test="${not empty requestScope.erreurNumero }">
 						<p class="text-danger">Le numéro de sécurité sociale est obligatoire et doit contenir 15 chiffres</p>
-					<% 
-						}
-					%>
+					</c:if>
 				</div>
 			</div>
 			<div class="form-row pt-2">

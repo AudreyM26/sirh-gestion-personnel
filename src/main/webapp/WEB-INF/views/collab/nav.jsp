@@ -9,7 +9,7 @@
 	integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
 	crossorigin="anonymous"></script>
 <script type="text/javascript"
-	src="<%=request.getContextPath()%>/bootstrap-4.4.1-dist/js/bootstrap.js"></script>
+	src="<c:url value='/bootstrap-4.4.1-dist/js/bootstrap.js'/>" ></script>
 
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
 	<a class="navbar-brand" href="#"><img src="/sgp/images/logo.png"

@@ -59,7 +59,7 @@ public class EditerCollaborateurController extends HttpServlet {
 				String[] tabErreur = req.getParameter("erreur").split(",");
 				
 				for (int i=0; i< tabErreur.length;i++ ){
-					req.setAttribute(tabErreur[i],"");
+					req.setAttribute(tabErreur[i],i);
 				}
 				
 			}
@@ -72,6 +72,8 @@ public class EditerCollaborateurController extends HttpServlet {
 
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		
+		req.setCharacterEncoding("UTF-8");
 		String matricule = req.getParameter("matricule").trim();
 		String civilite = req.getParameter("civilite").trim();
 		String adresse = req.getParameter("adresse").trim();
@@ -83,8 +85,6 @@ public class EditerCollaborateurController extends HttpServlet {
 		
 		String actif = req.getParameter("actif");
 	
-		//req.setCharacterEncoding("UTF-8");
-		
 		if(matricule == ""){
 			resp.setStatus(400);
 			resp.sendRedirect(req.getContextPath()+"/collaborateurs/lister");
@@ -95,16 +95,13 @@ public class EditerCollaborateurController extends HttpServlet {
 			Collaborateur collaborateur = collabService.infosCollaborateur(matricule);
 			if(!dept.equals("")){
 				String[] tabChampsDept = dept.split(",");
-				String champsDeptEncode = new String(tabChampsDept[1].toString().getBytes("iso-8859-1"), "utf-8");
-
-				//resp.getWriter().write("Hello ListerCollaborateursController à vous de jouer"+tabChampsDept[1]+" "+champsDeptEncode);
-				collaborateur.setDepartement(new Departement(Integer.parseInt(tabChampsDept[0]),champsDeptEncode));
+				//resp.getWriter().write("Hello ListerCollaborateursController à vous de jouer"+tabChampsDept[1]);
+				collaborateur.setDepartement(new Departement(Integer.parseInt(tabChampsDept[0]),tabChampsDept[1]));
 			}
 			
 			if(!poste.equals("")){
-				String posteEncode = new String(poste.toString().getBytes("iso-8859-1"), "utf-8");
-				collaborateur.setIntitulePoste(posteEncode);
-				//resp.getWriter().write("poste : "+poste+" "+posteEncode);
+				collaborateur.setIntitulePoste(poste);
+				//resp.getWriter().write("poste : "+poste);
 			}
 			
 			if(!iban.equals("")){
@@ -156,7 +153,7 @@ public class EditerCollaborateurController extends HttpServlet {
 				errorAdresse = "erreurAdresse";
 	
 			}else{
-				collaborateur.setAdresse(new String(adresse.toString().getBytes("iso-8859-1"), "utf-8"));
+				collaborateur.setAdresse(adresse);
 			}
 			
 			String erreur = "";
