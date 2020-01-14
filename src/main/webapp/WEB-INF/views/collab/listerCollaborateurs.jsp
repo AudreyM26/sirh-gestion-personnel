@@ -113,6 +113,6 @@
 		</div>
 	</main>
 	
-	<a href="lister?init">init liste</a>
+	<!-- <a href="lister?init">init liste</a>-->
 </body>
 </html>

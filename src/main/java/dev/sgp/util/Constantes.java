@@ -9,4 +9,6 @@ public class Constantes {
 	
 	// constante pour instancier DepartementService et acceder aux methodes
 	public static DepartementService DEPT_SERVICE = new DepartementService();
+	
+	public static VisiteWebService VISITE_SERVICE = new VisiteWebService();
 }

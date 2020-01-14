@@ -34,19 +34,6 @@ public class ListerCollaborateursController extends HttpServlet {
 		String dept = req.getParameter("dept");
 		String mot = req.getParameter("mot");
 		
-		if(req.getParameter("init") != null){
-
-			//code test pour ajouter collaborateur
-			List<Collaborateur> collaborateurstest = collabService.listerCollaborateurs();
-			String matricule = "M"+(collaborateurstest.size()+1);
-			Collaborateur nouveauCollab = new Collaborateur(matricule,"Toutter","Amélie",LocalDate.now(),"20 rue des étoiles 34000 montpellier","123456789123654","test.toto@societe.com","/images/portraitf.jpg",ZonedDateTime.now(),true);
-			collabService.sauvegarderCollaborateur(nouveauCollab);
-			collaborateurstest = collabService.listerCollaborateurs();
-			String matricule2 = "M"+(collaborateurstest.size()+1);
-			Collaborateur nouveauCollab2 = new Collaborateur(matricule2,"Roland","Rémi",LocalDate.now(),"25 rue des loups 34500 béziers","123456789123654","test.toto@societe.com","/images/portraith.png",ZonedDateTime.now(),false);
-			collabService.sauvegarderCollaborateur(nouveauCollab2);
-					
-		}
 		// utilisation du service
 		List<Collaborateur> collaborateurs = collabService.listerCollaborateurs();
 		List<Departement> departements = deptService.listerDepartements();
