@@ -1,5 +1,6 @@
 <%@ page language="java" pageEncoding="UTF-8" import="dev.sgp.entite.*,java.util.List,java.util.stream.Collectors,org.apache.commons.lang3.StringUtils"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -12,13 +13,11 @@
 <body>
 	<%@include file="nav.jsp" %>
 	
-	<c:set var ="listeCollaborateurs" scope ="session" value ="${param.listeCollaborateurs}"/>
-	<c:set var ="listeDepartements" scope ="session" value ="${param.listeDepartements}"/>
-	
-	<c:set var ="listeVisite" scope ="session" value ="${param.listeVisite}"/>
-	<c:forEach items="${listeVisite}" var="visit">
-    	<c:out value='${visit.getId()}'/><c:out value='${visit.getChemin()}'/><c:out value='${visit.getTempsExecution()}'/><br/>
-   	</c:forEach>
+	<c:set var ="listeActivites" scope ="session" value =""/>
+
+	<c:if test="${not empty requestScope.listeActivites}">
+		<c:set var ="listeActivites" scope ="session" value ="${param.listeActivites}"/>
+	</c:if>
 	<main>
         <div class="container mt-3">
             <div class="row mb-2">
@@ -32,14 +31,19 @@
                 <div class="col-5 col-sm-4">Date / Heure</div>
                 <div class="col-7 col-sm-8">Libellé</div>
             </div>
-            <div class="row bg-light">
-                <div class="col-5 col-sm-4">10/10/2017 10:50:52</div>
-                <div class="col-7 col-sm-8">Création d'un nouveau collaborateur - matricule : XXXXXX (lien)</div>
-            </div>
-            <div class="row">
-                <div class="col-5 col-sm-4">10/10/2017 10:52:52</div>
-                <div class="col-7 col-sm-8">Modification d'un collaborateur - matricule : XXXXXX (lien)</div>
-            </div>
+            <c:forEach items="${listeActivites}" var="act">
+            	<c:set var="infos" value="${fn:split(act, ',')}" />
+            	<c:set var="color" value="" />
+            	
+            	<c:if test="${cpte%2 == 0 }">
+            		<c:set var="color" value="bg-light" />
+            	</c:if>
+	            <div class="row <c:out value='${color}'/>">
+	                <div class="col-5 col-sm-4"><c:out value='${infos[0]}'/></div>
+	                <div class="col-7 col-sm-8"><c:out value='${infos[1]}'/> - matricule <a href="editer?matricule=<c:out value='${infos[2]}'/>" /><c:out value='${infos[2]}'/></a></div>
+	            </div>
+	            <c:set var="cpte" value="${cpte+1}" />
+            </c:forEach>
         </div>
     </main>
 	

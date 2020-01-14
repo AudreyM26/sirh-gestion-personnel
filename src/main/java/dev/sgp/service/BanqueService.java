@@ -4,6 +4,12 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
+/***
+ * initialiser une map avec nom de la banque selon le bic
+ * @author audrey
+ *
+ */
+
 public class BanqueService {
 
 	public static Map<String, String> bicBanque;

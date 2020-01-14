@@ -30,6 +30,7 @@ public class FrequentationFilter implements Filter {
 	public void doFilter(ServletRequest req, ServletResponse resp, FilterChain chain)
 			throws IOException, ServletException {
 
+		req.setCharacterEncoding("UTF-8");
 		String path = ((HttpServletRequest) req ).getRequestURI();
 		
 		long before = System.currentTimeMillis();

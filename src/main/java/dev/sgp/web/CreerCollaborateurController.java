@@ -131,7 +131,7 @@ public class CreerCollaborateurController extends HttpServlet {
 					
 					List<Collaborateur> collaborateurs = collabService.listerCollaborateurs();
 					String matricule = "M"+(collaborateurs.size()+1);
-				
+					
 					Collaborateur nouveauCollab = new Collaborateur(matricule,nom,prenom,datenaissance,adresse,numerosecu,emailPro,photo,dateHeureCreation,true);
 					collabService.sauvegarderCollaborateur(nouveauCollab);
 		

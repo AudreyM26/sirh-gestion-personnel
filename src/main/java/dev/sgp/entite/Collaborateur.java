@@ -3,6 +3,11 @@ package dev.sgp.entite;
 import java.time.LocalDate;
 import java.time.ZonedDateTime;
 
+/***
+ * classe Collaborateur avec constructeur
+ * @author audrey
+ *
+ */
 public class Collaborateur {
 
 	private String matricule;

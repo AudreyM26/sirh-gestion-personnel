@@ -1,7 +1,5 @@
 package dev.sgp.service;
 
-import java.time.LocalDate;
-import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -10,10 +8,15 @@ import org.apache.commons.lang3.StringUtils;
 
 import dev.sgp.entite.*;
 
+/***
+ * methode pour lister, filtrer et sauvegarder les collaborateurs
+ * @author audrey
+ *
+ */
 public class CollaborateurService {
 
 	List<Collaborateur> listeCollaborateurs = new ArrayList<>();
-
+	
 	public List<Collaborateur> listerCollaborateurs() {
 		return listeCollaborateurs;
 	}
@@ -54,5 +57,5 @@ public class CollaborateurService {
 						|| StringUtils.stripAccents(c.getPrenom()).toLowerCase().startsWith(motBegin)))
 				.collect(Collectors.toList());
 	}
-
+	
 }

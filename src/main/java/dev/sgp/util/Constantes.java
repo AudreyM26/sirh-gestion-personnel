@@ -11,4 +11,6 @@ public class Constantes {
 	public static DepartementService DEPT_SERVICE = new DepartementService();
 	
 	public static VisiteWebService VISITE_SERVICE = new VisiteWebService();
+	
+	public static ActiviteService ACTIVITES_SERVICE = new ActiviteService();
 }

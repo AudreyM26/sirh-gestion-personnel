@@ -3,14 +3,19 @@ package dev.sgp.service;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Comparator;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
 import dev.sgp.entite.VisiteWeb;
+
+/***
+ * methodes pour lister et sauvegarder les statistiques (liste remplie dans filtre frequentationFilter)
+ * methode pour afficher les infos sur la page statistiques
+ * @author audrey
+ *
+ */
 
 public class VisiteWebService {
 

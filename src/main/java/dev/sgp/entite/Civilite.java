@@ -1,4 +1,11 @@
 package dev.sgp.entite;
+
+/***
+ * enum Civilite avec constructeur
+ * @author audrey
+ *
+ */
+
 public enum Civilite {  // dans le fichier Civilite.java  
   
     mme("Madame"),mr("Monsieur"),nouv("");  

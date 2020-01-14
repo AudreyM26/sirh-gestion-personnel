@@ -7,6 +7,7 @@ import dev.sgp.entite.Departement;
 
 /***
  * departement avec id et nom
+ * methode pou recuperer la liste de departements
  * @author audrey
  *
  */

@@ -9,6 +9,7 @@ import java.util.Arrays;
 import javax.servlet.ServletException;
 import javax.servlet.http.*;
 
+import dev.sgp.ecouteur.MyContainerListener;
 import dev.sgp.entite.*;
 import dev.sgp.service.*;
 import dev.sgp.util.Constantes;
@@ -37,6 +38,7 @@ public class ListerCollaborateursController extends HttpServlet {
 		// utilisation du service
 		List<Collaborateur> collaborateurs = collabService.listerCollaborateurs();
 		List<Departement> departements = deptService.listerDepartements();
+
 
 		if(actif != null){
 			req.setAttribute("actif", actif);

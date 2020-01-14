@@ -1,5 +1,12 @@
 package dev.sgp.entite;
 
+
+/***
+ * classe VisiteWeb avec constructeur
+ * @author audrey
+ *
+ */
+
 public class VisiteWeb {
 
 	Integer id;

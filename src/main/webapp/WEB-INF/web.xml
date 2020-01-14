@@ -54,4 +54,7 @@
 		<filter-name>FrequentationFilter</filter-name>
 		<url-pattern>/collaborateurs/*</url-pattern>
 	</filter-mapping>
+	<listener>
+		<listener-class>dev.sgp.ecouteur.MyContainerListener</listener-class>
+	</listener>
 </web-app>

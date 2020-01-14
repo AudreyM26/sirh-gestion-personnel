@@ -1,5 +1,11 @@
 package dev.sgp.entite;
 
+
+/***
+ * classe Departement avec constructeur
+ * @author audrey
+ *
+ */
 public class Departement {
 
 	Integer Id;
