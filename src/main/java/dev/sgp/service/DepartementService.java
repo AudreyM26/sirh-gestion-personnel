@@ -1,6 +1,6 @@
 package dev.sgp.service;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.List;
 
 import dev.sgp.entite.Departement;
@@ -14,9 +14,9 @@ import dev.sgp.entite.Departement;
 
 public class DepartementService {
 
-	List<Departement> listeDepartements = Arrays.asList(new Departement(1,"Comptabilité"),new Departement(2,"Ressources humaines"), new Departement(3,"Informatique"),new Departement(4,"Administratif"));
-	
-	
+	List<Departement> listeDepartements = new ArrayList<>();
+			
+
 	public List<Departement> listerDepartements() {
 		return listeDepartements;
 	}
