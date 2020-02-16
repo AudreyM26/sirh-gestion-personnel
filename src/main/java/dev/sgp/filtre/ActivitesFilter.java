@@ -66,16 +66,11 @@ public class ActivitesFilter implements Filter{
 			activiteService.sauvegarderActivite(dateHeure+","+message+","+matricule);
 	    }
 		
-		
-		
-		
 		chain.doFilter(req, resp);
 	}
 
 	@Override
 	public void destroy() {
-		// TODO Auto-generated method stub
-		
+		// TODO Auto-generated method stub	
 	}
-
 }

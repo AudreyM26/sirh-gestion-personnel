@@ -40,7 +40,7 @@
             	</c:if>
 	            <div class="row <c:out value='${color}'/>">
 	                <div class="col-5 col-sm-4"><c:out value='${infos[0]}'/></div>
-	                <div class="col-7 col-sm-8"><c:out value='${infos[1]}'/> - matricule <a href="editer?matricule=<c:out value='${infos[2]}'/>" /><c:out value='${infos[2]}'/></a></div>
+	                <div class="col-7 col-sm-8"><c:out value='${infos[1]}'/> - matricule <a href="editer?matricule=<c:out value='${infos[2]}'/>" ><c:out value='${infos[2]}'/></a></div>
 	            </div>
 	            <c:set var="cpte" value="${cpte+1}" />
             </c:forEach>

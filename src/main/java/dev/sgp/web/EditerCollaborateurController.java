@@ -169,6 +169,5 @@ public class EditerCollaborateurController extends HttpServlet {
 			
 			resp.sendRedirect(req.getContextPath()+"/collaborateurs/editer?matricule="+matricule+erreur);
 		}
-
 	}
 }

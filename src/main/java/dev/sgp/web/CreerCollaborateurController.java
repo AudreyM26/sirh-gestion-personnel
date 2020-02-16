@@ -105,7 +105,7 @@ public class CreerCollaborateurController extends HttpServlet {
 				
 				//convert String to LocalDate
 				LocalDate datenaissance = LocalDate.parse(date);
-				Period period = Period.between(datenaissance, LocalDate.now());
+				//Period period = Period.between(datenaissance, LocalDate.now());
 				
 				//resp.getWriter().write("Hello ListerCollaborateursController à vous de jouer"+period.getYears());
 				

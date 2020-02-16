@@ -29,7 +29,7 @@
             <form id="rechercherCollaborateurs" method="post" action="lister">
             <div class="row mb-2">
                 <div class="col-md-4 text-md-right">
-                    <labefor="mot">Rechercher un nom ou un prénom qui commence par :</label>
+                    <label for="mot">Rechercher un nom ou un prénom qui commence par :</label>
                 </div>
                 <c:set var ="motSearch" scope ="session" value =""/>
                	<c:if test="${not empty param.mot}">
@@ -64,45 +64,42 @@
                             <h5><c:out value='${collab.getNom()}'/> <c:out value='${collab.getPrenom()}'/></h5>
                         </div>
                         <div class="card-body p-0">
-                            <p class="card-text">
-                                <div class="container">
-                                    <div class="row"> 
-                                        <div class="col-12 col-xl-3 p-0"><img src="<c:url value='${collab.getPhoto()}' />" alt="Logo" />
-                                        </div>
-                                        <div class="col-12 col-xl-9 ">
-                                            <div class="row">
-                                                <div class="col-5">Fonction</div>
-                                                <c:set var="intitule" scope="session" value="" />
-                                                <c:if test="${collab.getIntitulePoste() != null}">
-                                                	<c:set var="intitule" scope="session" value="${collab.getIntitulePoste()}" />
-                                                </c:if>
-                                                <div class="col-7"><c:out value='${intitule}'/></div>
-                                            </div>
-                                            <div class="row">
-                                            
-                                                <div class="col-5">Département</div>
-                                               	<c:set var="deptNom" scope="session" value="" />
-                                                <c:if test="${collab.getDepartement() != null}">
-                                                	<c:set var="deptNom" scope="session" value="${collab.getDepartement().getNom()}" />
-                                                </c:if>
-                                                <div class="col-7"><c:out value='${deptNom}'/></div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-5">Email</div>
-                                                <div class="col-7"><c:out value='${collab.getEmailPro()}'/></div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-5">Téléphone</div>
-                                                <div class="col-7"><c:out value='${collab.getTelephone()}'/></div>
-                                            </div>
-
-                                        </div>
-
-                                    </div>
-                                </div>
-                                <div class="text-right pr-2"><a href="editer?matricule=<c:out value='${collab.getMatricule()}'/>" class="btn btn-info">Editer</a></div>
-                            </p>
-
+	                        <div class="container card-text pt-3">
+	                            <div class="row"> 
+	                                <div class="col-12 col-xl-3 p-0"><img src="<c:url value='${collab.getPhoto()}' />" alt="Logo" />
+	                                </div>
+	                                <div class="col-12 col-xl-9 ">
+	                                    <div class="row">
+	                                        <div class="col-5">Fonction</div>
+	                                        <c:set var="intitule" scope="session" value="" />
+	                                        <c:if test="${collab.getIntitulePoste() != null}">
+	                                        	<c:set var="intitule" scope="session" value="${collab.getIntitulePoste()}" />
+	                                        </c:if>
+	                                        <div class="col-7"><c:out value='${intitule}'/></div>
+	                                    </div>
+	                                    <div class="row">
+	                                    
+	                                        <div class="col-5">Département</div>
+	                                       	<c:set var="deptNom" scope="session" value="" />
+	                                        <c:if test="${collab.getDepartement() != null}">
+	                                        	<c:set var="deptNom" scope="session" value="${collab.getDepartement().getNom()}" />
+	                                        </c:if>
+	                                        <div class="col-7"><c:out value='${deptNom}'/></div>
+	                                    </div>
+	                                    <div class="row">
+	                                        <div class="col-5">Email</div>
+	                                        <div class="col-7"><c:out value='${collab.getEmailPro()}'/></div>
+	                                    </div>
+	                                    <div class="row">
+	                                        <div class="col-5">Téléphone</div>
+	                                        <div class="col-7"><c:out value='${collab.getTelephone()}'/></div>
+	                                    </div>
+	
+	                                </div>
+	
+	                            </div>
+	                        </div>
+	                        <div class="text-right pr-2"><a href="editer?matricule=<c:out value='${collab.getMatricule()}'/>" class="btn btn-info">Editer</a></div>
                         </div>
                     </div>
                 </div>
