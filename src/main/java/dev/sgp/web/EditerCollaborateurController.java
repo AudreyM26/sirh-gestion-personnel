@@ -110,8 +110,6 @@ public class EditerCollaborateurController extends HttpServlet {
 			
 			if(!bic.equals("")){
 				collaborateur.setBic(bic);
-				
-				BanqueService banqueService = new BanqueService();
 				collaborateur.setBanque(BanqueService.banqueNom(bic));
 			}
 			
